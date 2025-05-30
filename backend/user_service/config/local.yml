@@ -1,7 +1,6 @@
 env: local
-server:
-  port: 8080
-  host: localhost
+grpc:
+  port: 8000
 db:
   host: localhost
   port: 5432

@@ -8,13 +8,12 @@ import (
 )
 
 type Config struct {
-	Env    string   `yaml:"env" env:"ENV"`
-	Server Server   `yaml:"server"`
-	DB     DataBase `yaml:"db"`
+	Env        string   `yaml:"env" env:"ENV"`
+	GRPCServer GRPC     `yaml:"grpc"`
+	DB         DataBase `yaml:"db"`
 }
 
-type Server struct {
-	Host string `yaml:"host" env:"HOST"`
+type GRPC struct {
 	Port string `yaml:"port" env:"PORT"`
 }
 

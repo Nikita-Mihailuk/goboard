@@ -14,7 +14,7 @@ func main() {
 	log := logging.GetLogger(cfg.Env)
 
 	application := app.NewApp(log, cfg)
-	go application.HTTPServer.MustRun()
+	go application.GRPCServer.MustRun()
 
 	// Graceful shutdown
 	stop := make(chan os.Signal, 1)
@@ -22,6 +22,6 @@ func main() {
 
 	<-stop
 
-	application.HTTPServer.Stop()
+	application.GRPCServer.Stop()
 	log.Info("application stopped")
 }

@@ -1,20 +1,24 @@
 package app
 
 import (
-	"github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/app/http"
+	grpcApp "github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/app/grpc"
 	"github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/config"
-
+	"github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/service/user"
+	"github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/storage/postgres"
 	"go.uber.org/zap"
 )
 
 type App struct {
-	HTTPServer *http.App
+	GRPCServer *grpcApp.App
 }
 
 func NewApp(log *zap.Logger, cfg *config.Config) *App {
+	storage := postgres.NewStorage(cfg)
 
-	// TODO
+	service := user.NewUserService(log, storage, storage, storage)
+
+	gRPCApp := grpcApp.NewApp(log, service, cfg.GRPCServer.Port)
 	return &App{
-		HTTPServer: ,
+		GRPCServer: gRPCApp,
 	}
 }
