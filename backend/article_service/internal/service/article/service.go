@@ -43,7 +43,7 @@ type ArticleProvider interface {
 }
 
 type ArticleUpdater interface {
-	UpdateArticle(ctx context.Context, input dto.UpdateArticleInput) error
+	UpdateArticle(ctx context.Context, article model.Article) error
 }
 
 type ArticleDeleter interface {

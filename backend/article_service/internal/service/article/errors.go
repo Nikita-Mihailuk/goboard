@@ -1,5 +1,7 @@
 package article
 
+import "errors"
+
 var (
-// TODO
+	ErrArticleNotFound = errors.New("article not found")
 )
