@@ -1,0 +1,9 @@
+server:
+  port: 8080
+  timeout: 5s
+userService:
+  host: localhost
+  port: 8000
+articleService:
+  host: localhost
+  port: 8001
