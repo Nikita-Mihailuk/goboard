@@ -6,6 +6,8 @@ github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250530
 github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250530101701-1ce14a6cc9a2/go.mod h1:ZB1s6ScKZzsypau+8PLqWAOihYG+KxOKEt2dWZgCSo0=
 github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250531091459-124a34573daa h1:G2ufJCPPsmiNCbftcCITkcI6fz+85Q/sIEC/aFJ1res=
 github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250531091459-124a34573daa/go.mod h1:ZB1s6ScKZzsypau+8PLqWAOihYG+KxOKEt2dWZgCSo0=
+github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250531175044-5199ed21caaf h1:4xiNfwn23ybprZ2j6tomGO2XlmwzkakTjxV9xzIZ6mg=
+github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250531175044-5199ed21caaf/go.mod h1:ZB1s6ScKZzsypau+8PLqWAOihYG+KxOKEt2dWZgCSo0=
 github.com/Nikita-Mihailuk/protos_goboard/gen/go/user_service v0.0.0-20250530101701-1ce14a6cc9a2 h1:UgP9PMMaE7yMiePZjO4ExjPzuafoiZAcZCgFOnL/GTo=
 github.com/Nikita-Mihailuk/protos_goboard/gen/go/user_service v0.0.0-20250530101701-1ce14a6cc9a2/go.mod h1:uMD4ubvaGP+ah5Zd6RX7TRorVgHonD5+mfp1ytZ7TgU=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

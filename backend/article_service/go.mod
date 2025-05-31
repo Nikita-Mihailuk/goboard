@@ -9,7 +9,7 @@ require (
 )
 
 require (
-	github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250531091459-124a34573daa // indirect
+	github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250531175044-5199ed21caaf // indirect
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect

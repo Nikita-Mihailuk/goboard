@@ -19,9 +19,9 @@ type ArticleService interface {
 
 type serverGRPC struct {
 	articleService ArticleService
-	articleServicev1.UnimplementedUserServer
+	articleServicev1.UnimplementedArticleServer
 }
 
 func RegisterGRPCServer(grpcServer *grpc.Server, articleService ArticleService) {
-	articleServicev1.RegisterUserServer(grpcServer, &serverGRPC{articleService: articleService})
+	articleServicev1.RegisterArticleServer(grpcServer, &serverGRPC{articleService: articleService})
 }
