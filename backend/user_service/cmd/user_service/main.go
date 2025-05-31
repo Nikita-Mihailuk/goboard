@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/app"
 	"github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/config"
-	"github.com/Nikita-Mihailuk/smartwayTestTask/pkg/logging"
+	"github.com/Nikita-Mihailuk/goboard/backend/user_service/pkg/logging"
 	"os"
 	"os/signal"
 	"syscall"

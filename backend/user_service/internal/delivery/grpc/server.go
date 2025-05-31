@@ -9,9 +9,9 @@ import (
 
 type UserService interface {
 	CreateUser(ctx context.Context, input dto.CreateUserInput) error
-	LoginUser(ctx context.Context, email string) (dto.LoginUserOutput, error)
+	GetLoginUser(ctx context.Context, email string) (dto.LoginUserOutput, error)
 	GetUserByID(ctx context.Context, id int64) (dto.GetUserByIDOutput, error)
-	UpdateUser(ctx context.Context, id int64, input dto.UpdateUserInput) error
+	UpdateUser(ctx context.Context, input dto.UpdateUserInput) error
 }
 
 type serverGRPC struct {

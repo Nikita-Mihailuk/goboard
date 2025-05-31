@@ -34,9 +34,10 @@ type UserSaver interface {
 
 type UserProvider interface {
 	GetUserByEmail(ctx context.Context, email string) (dto.LoginUserOutput, error)
-	GetUserByID(ctx context.Context, id string) (dto.GetUserByIDOutput, error)
+	GetUserByID(ctx context.Context, id int64) (dto.GetUserByIDOutput, error)
+	GetUserUpdateByID(ctx context.Context, id int64) (dto.UserForUpdate, error)
 }
 
 type UserUpdater interface {
-	RefreshUser(ctx context.Context, id int64, input dto.UpdateUserInput) error
+	RefreshUser(ctx context.Context, input dto.UserForUpdate) error
 }
