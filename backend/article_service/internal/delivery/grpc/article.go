@@ -40,6 +40,7 @@ func (s *serverGRPC) GetArticleByID(ctx context.Context, req *articleServicev1.G
 		Title:          outputArticle.Title,
 		AuthorName:     outputArticle.AuthorName,
 		AuthorPhotoUrl: outputArticle.AuthorPhotoURL,
+		AuthorId:       outputArticle.AuthorID,
 		Content:        outputArticle.Content,
 		CreatedAt:      timestamppb.New(outputArticle.CreatedAt),
 		UpdatedAt:      timestamppb.New(outputArticle.UpdatedAt),
