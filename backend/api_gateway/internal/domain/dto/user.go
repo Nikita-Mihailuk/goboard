@@ -30,5 +30,5 @@ type UpdateUserInput struct {
 type GetUserByIDOutput struct {
 	Email    string `json:"email"`
 	Name     string `json:"name"`
-	PhotoURL string `json:"photo_url"`
+	PhotoURL string `json:"photo_url,omitempty"`
 }
