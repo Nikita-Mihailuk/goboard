@@ -1,7 +1,7 @@
 services:
   api_gateway:
     container_name: api_gateway
-    build: ./api_gateway
+    build: backend/api_gateway
     depends_on:
       - user_service
       - article_service
@@ -19,7 +19,7 @@ services:
 
   user_service:
     container_name: user_service
-    build: ./user_service
+    build: backend/user_service
     command: sh -c "./migrator --migrations-path=./migrations --db-url=${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME} && ./user_service"
     depends_on:
       user_db:
@@ -51,7 +51,7 @@ services:
 
   article_service:
     container_name: article_service
-    build: ./article_service
+    build: backend/article_service
     depends_on:
       article_db:
         condition: service_healthy
@@ -82,6 +82,14 @@ services:
       retries: 5
     volumes:
       - article-db-data:/data/db
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api_gateway
 
 volumes:
   user-db-data:
