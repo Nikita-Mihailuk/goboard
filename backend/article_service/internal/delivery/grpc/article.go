@@ -37,11 +37,12 @@ func (s *serverGRPC) GetArticleByID(ctx context.Context, req *articleServicev1.G
 		return nil, status.Error(codes.Internal, "internal error")
 	}
 	return &articleServicev1.GetArticleByIDResponse{
-		Title:      outputArticle.Title,
-		AuthorName: outputArticle.AuthorName,
-		Content:    outputArticle.Content,
-		CreatedAt:  timestamppb.New(outputArticle.CreatedAt),
-		UpdatedAt:  timestamppb.New(outputArticle.UpdatedAt),
+		Title:          outputArticle.Title,
+		AuthorName:     outputArticle.AuthorName,
+		AuthorPhotoUrl: outputArticle.AuthorPhotoURL,
+		Content:        outputArticle.Content,
+		CreatedAt:      timestamppb.New(outputArticle.CreatedAt),
+		UpdatedAt:      timestamppb.New(outputArticle.UpdatedAt),
 	}, nil
 }
 
@@ -131,9 +132,10 @@ func validateCreateArticleRequest(req *articleServicev1.CreateArticleRequest) (d
 	}
 
 	return dto.CreateArticleInput{
-		AuthorID:   req.GetAuthorId(),
-		AuthorName: req.GetAuthorName(),
-		Title:      req.GetTitle(),
-		Content:    req.GetContent(),
+		AuthorID:       req.GetAuthorId(),
+		AuthorName:     req.GetAuthorName(),
+		Title:          req.GetTitle(),
+		Content:        req.GetContent(),
+		AuthorPhotoURL: req.GetAuthorPhotoUrl(),
 	}, nil
 }

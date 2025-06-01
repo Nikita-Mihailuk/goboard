@@ -23,13 +23,14 @@ func (s *Storage) collection() *mongoDriver.Collection {
 func (s *Storage) SaveArticle(ctx context.Context, input dto.CreateArticleInput) error {
 	now := time.Now()
 	article := model.Article{
-		ID:         primitive.NewObjectID().Hex(),
-		Title:      input.Title,
-		Content:    input.Content,
-		AuthorName: input.AuthorName,
-		AuthorID:   input.AuthorID,
-		CreatedAt:  now,
-		UpdatedAt:  now,
+		ID:             primitive.NewObjectID().Hex(),
+		Title:          input.Title,
+		Content:        input.Content,
+		AuthorName:     input.AuthorName,
+		AuthorID:       input.AuthorID,
+		AuthorPhotoURL: input.AuthorPhotoURL,
+		CreatedAt:      now,
+		UpdatedAt:      now,
 	}
 
 	_, err := s.collection().InsertOne(ctx, article)
