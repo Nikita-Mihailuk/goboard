@@ -10,6 +10,7 @@ RUN go build -o api_gateway cmd/gateway/main.go
 
 # Stage 2 - run
 FROM alpine
+RUN mkdir -p /app/static
 WORKDIR /app
 COPY --from=builder /app/api_gateway .
 CMD ["./api_gateway"]

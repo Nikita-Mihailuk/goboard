@@ -1,0 +1,89 @@
+services:
+  api_gateway:
+    container_name: api_gateway
+    build: ./api_gateway
+    depends_on:
+      - user_service
+      - article_service
+    ports:
+      - "8080:${HTTP_PORT}"
+    volumes:
+      - api-static:/app/static
+    environment:
+      HTTP_PORT:  ${HTTP_PORT}
+      GRPC_TIMEOUT: ${GRPC_TIMEOUT}
+      USER_SERVICE_HOST: ${USER_SERVICE_HOST}
+      USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+      ARTICLE_SERVICE_HOST: ${ARTICLE_SERVICE_HOST}
+      ARTICLE_SERVICE_PORT: ${ARTICLE_SERVICE_PORT}
+
+  user_service:
+    container_name: user_service
+    build: ./user_service
+    command: sh -c "./migrator --migrations-path=./migrations --db-url=${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME} && ./user_service"
+    depends_on:
+      user_db:
+        condition: service_healthy
+    environment:
+      ENV: ${ENV}
+      PORT: ${USER_SERVICE_PORT}
+      DATABASE_HOST: ${POSTGRES_HOST}
+      DATABASE_PORT: ${POSTGRES_PORT}
+      DATABASE_USERNAME: ${POSTGRES_USERNAME}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_NAME: ${POSTGRES_NAME}
+
+  user_db:
+    container_name: user_db
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_NAME}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+
+  article_service:
+    container_name: article_service
+    build: ./article_service
+    depends_on:
+      article_db:
+        condition: service_healthy
+    environment:
+      ENV: ${ENV}
+      PORT: ${ARTICLE_SERVICE_PORT}
+      DATABASE_HOST: ${MONGO_HOST}
+      DATABASE_PORT: ${MONGO_PORT}
+      DATABASE_USERNAME: ${MONGO_USERNAME}
+      DATABASE_PASSWORD: ${MONGO_PASSWORD}
+
+  article_db:
+    container_name: article_db
+    image: mongo:latest
+    restart: always
+    command:
+      - mongod
+      - --quiet
+      - --logappend
+      - --logpath=/proc/1/fd/1
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - article-db-data:/data/db
+
+volumes:
+  user-db-data:
+  article-db-data:
+  api-static:
