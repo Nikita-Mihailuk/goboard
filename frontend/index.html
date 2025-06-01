@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoBoard - Вход</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/auth.css">
+    <link rel="icon" href="images/icon.png" type="image/x-icon">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>GoBoard</h1>
+        <form id="loginForm" class="auth-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn-primary">Войти</button>
+        </form>
+        <p class="auth-link">
+            Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+        </p>
+    </div>
+    <script src="scripts/auth.js"></script>
+</body>
+</html> 
