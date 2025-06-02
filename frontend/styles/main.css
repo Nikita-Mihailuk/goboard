@@ -1,0 +1,171 @@
+.header {
+    background-color: var(--surface-color);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.header nav {
+    display: flex;
+    gap: 20px;
+}
+
+.header nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.header nav a.active {
+    color: var(--text-color);
+    background-color: var(--primary-color);
+}
+
+.content {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.search-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.search-container input,
+.search-container select {
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+
+.search-container input {
+    flex: 1;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.article-card {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+}
+
+.article-card h3 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.article-card .article-meta {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.profile-info {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.profile-header {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.profile-header img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-details h2 {
+    margin-bottom: 10px;
+}
+
+.profile-details p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.profile-articles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--surface-color);
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.page-info {
+    color: var(--text-secondary);
+    font-size: 14px;
+} 

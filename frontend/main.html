@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoBoard - Главная</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" href="images/icon.png" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <h1>GoBoard</h1>
+        <nav>
+            <a href="#" class="active" id="mainTab">Главная</a>
+            <a href="#" id="profileTab">Профиль</a>
+            <a href="#" id="logoutBtn">Выход</a>
+        </nav>
+    </header>
+
+    <main>
+        <div id="mainContent" class="content">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Поиск статей...">
+                <select id="sortSelect">
+                    <option value="newest">Сначала новые</option>
+                    <option value="oldest">Сначала старые</option>
+                </select>
+            </div>
+            <div id="articlesList" class="articles-grid"></div>
+            <div class="pagination">
+                <button id="prevPage" class="btn-secondary">Предыдущая</button>
+                <span id="pageInfo" class="page-info">Страница 1</span>
+                <button id="nextPage" class="btn-secondary">Следующая</button>
+            </div>
+        </div>
+
+        <div id="profileContent" class="content hidden">
+            <div class="profile-info">
+                <div class="profile-header">
+                    <img id="userPhoto" src="images/default-avatar.png" alt="Фото профиля">
+                    <div class="profile-details">
+                        <h2 id="userName">Загрузка...</h2>
+                        <p id="userEmail">Загрузка...</p>
+                        <button id="editProfileBtn" class="btn-secondary">Редактировать профиль</button>
+                    </div>
+                </div>
+                <div class="profile-articles">
+                    <div class="profile-articles-header">
+                        <h3>Мои статьи</h3>
+                        <button id="createArticleBtn" class="btn-primary">Создать статью</button>
+                    </div>
+                    <div id="userArticlesList" class="articles-grid"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <h2>Редактировать профиль</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editName">Имя:</label>
+                    <input type="text" id="editName" name="new_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCurrentPassword">Текущий пароль:</label>
+                    <input type="password" id="editCurrentPassword" name="current_password" required>
+                </div>
+                <div class="form-group">
+                    <label for="editNewPassword">Новый пароль:</label>
+                    <input type="password" id="editNewPassword" name="new_password">
+                </div>
+                <div class="form-group">
+                    <label for="editPhoto">Фото профиля:</label>
+                    <input type="file" id="editPhoto" name="photo" accept="image/*">
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn-primary">Сохранить</button>
+                    <button type="button" class="btn-secondary" id="closeEditProfileModal">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html> 
