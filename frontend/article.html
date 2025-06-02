@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoBoard - Статья</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/article.css">
+    <link rel="icon" href="images/icon.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1>GoBoard</h1>
+        <nav>
+            <button onclick="window.location.href='main.html'" class="btn-primary">Вернуться на главную</button>
+        </nav>
+    </header>
+
+    <main class="article-container">
+        <article class="article-content">
+            <div class="article-header">
+                <h1 id="articleTitle">Загрузка...</h1>
+                <div class="article-meta">
+                    <div class="author-info">
+                        <img id="authorPhoto" src="images/default-avatar.jpg" alt="Фото автора">
+                        <span id="authorName">Загрузка...</span>
+                    </div>
+                    <span id="articleDate">Загрузка...</span>
+                </div>
+            </div>
+            <div id="articleContent" class="article-body markdown-content">
+                Загрузка...
+            </div>
+        </article>
+    </main>
+
+    <script src="scripts/article.js"></script>
+</body>
+</html> 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoBoard - Редактирование статьи</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/article-edit.css">
+    <link rel="icon" href="images/icon.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1>GoBoard</h1>
+        <nav>
+            <button onclick="window.location.href='main.html'" class="btn-primary">Вернуться на главную</button>
+        </nav>
+    </header>
+
+    <main class="editor-container">
+        <form id="articleForm" class="editor-form">
+            <div class="form-group">
+                <label for="title">Заголовок:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="editor-tabs">
+                <button type="button" class="tab-button active" data-tab="editor">Редактор</button>
+                <button type="button" class="tab-button" data-tab="preview">Предпросмотр</button>
+            </div>
+            <div class="tab-content">
+                <div id="editorTab" class="tab-pane active">
+                    <div class="form-group">
+                        <label for="content">Содержание (в формате Markdown):</label>
+                        <textarea id="content" name="content" required></textarea>
+                    </div>
+                </div>
+                <div id="previewTab" class="tab-pane">
+                    <div class="preview-content markdown-content">
+                        <div id="previewContent"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="editor-buttons">
+                <button type="submit" class="btn-primary">Сохранить</button>
+                <button type="button" id="deleteBtn" class="btn-secondary">Удалить</button>
+            </div>
+        </form>
+    </main>
+
+    <script src="scripts/article-edit.js"></script>
+</body>
+</html> 

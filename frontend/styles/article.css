@@ -1,0 +1,107 @@
+.article-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.article-content {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    padding: 40px;
+}
+
+.header {
+    background-color: var(--surface-color);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.article-header {
+    margin-bottom: 30px;
+}
+
+.article-header h1 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.article-body {
+    color: var(--text-color);
+    line-height: 1.8;
+}
+
+/* Стили для markdown-контента */
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4,
+.article-body h5,
+.article-body h6 {
+    margin: 1.5em 0 0.5em;
+    color: var(--text-color);
+}
+
+.article-body p {
+    margin: 1em 0;
+}
+
+.article-body code {
+    background-color: var(--background-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.article-body pre {
+    background-color: var(--background-color);
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+.article-body a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.article-body a:hover {
+    text-decoration: underline;
+}
+
+.article-body ul,
+.article-body ol {
+    margin: 1em 0;
+    padding-left: 2em;
+}
+
+.article-body blockquote {
+    border-left: 4px solid var(--primary-color);
+    margin: 1em 0;
+    padding-left: 1em;
+    color: var(--text-secondary);
+} 
