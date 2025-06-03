@@ -65,16 +65,16 @@ func (s *UserService) GetUserByID(ctx context.Context, id int64) (dto.GetUserByI
 func (s *UserService) UpdateUser(ctx context.Context, input dto.UpdateUserInput) error {
 	user, err := s.userProvider.GetUserUpdateByID(ctx, input.ID)
 	if err != nil {
+		if errors.Is(err, postgres.ErrUserNotFound) {
+			s.log.Error("user not found", zap.Error(err))
+			return ErrUserNotFound
+		}
 		s.log.Error("failed get password by id", zap.Error(err))
 		return err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(input.CurrentPassword))
 	if err != nil {
-		if errors.Is(err, postgres.ErrUserNotFound) {
-			s.log.Error("user not found", zap.Error(err))
-			return ErrUserNotFound
-		}
 		s.log.Error("failed compare current password", zap.Error(err))
 		return ErrInvalidPassword
 	}
