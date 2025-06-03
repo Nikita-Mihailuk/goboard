@@ -16,7 +16,6 @@ func main() {
 	go application.HTTPServer.MustRun()
 
 	// Graceful shutdown
-
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
 

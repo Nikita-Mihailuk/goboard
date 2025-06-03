@@ -1,0 +1,9 @@
+env: local
+grpc:
+  port: 8000
+db:
+  host: localhost
+  port: 5432
+  userName: postgres
+  password: "00000000"
+  name: user_service_goboard_test
