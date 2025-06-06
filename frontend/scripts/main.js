@@ -219,7 +219,7 @@ editProfileForm.onsubmit = async (e) => {
         });
 
         if (!response.ok) {
-            throw new Error('Ошибка при обновлении профиля');
+            throw new Error('Неверный текущий пароль');
         }
 
         editProfileModal.classList.remove('active');

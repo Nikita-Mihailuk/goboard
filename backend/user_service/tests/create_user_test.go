@@ -79,7 +79,7 @@ func TestCreateUser(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := s.UserClient.CreateUser(ctx, tt.input)
+			_, err = s.UserClient.CreateUser(ctx, tt.input)
 
 			if tt.wantErr != nil {
 				assert.Error(t, err)
