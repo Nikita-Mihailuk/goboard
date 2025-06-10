@@ -89,9 +89,9 @@ func validateCreateUserRequest(req *userServicev1.CreateUserRequest) (dto.Create
 	}
 
 	return dto.CreateUserInput{
-		Email:    req.GetEmail(),
-		Password: req.GetPassword(),
-		Name:     req.GetName(),
+		Email:        req.GetEmail(),
+		PasswordHash: req.GetPassword(),
+		Name:         req.GetName(),
 	}, nil
 }
 

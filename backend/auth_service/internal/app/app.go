@@ -32,7 +32,7 @@ func NewApp(log *zap.Logger, cfg *config.Config) *App {
 		panic(err)
 	}
 
-	articleService := auth.NewArticleService(log, &tokenManager, userServiceClient, cfg.Auth.AccessTokenTTL, storage, storage, storage)
+	articleService := auth.NewArticleService(log, tokenManager, userServiceClient, cfg.Auth.AccessTokenTTL, storage, storage, storage)
 
 	gRPCApp := grpcApp.NewApp(log, articleService, cfg.GRPCServer.Port)
 	return &App{

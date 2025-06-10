@@ -10,7 +10,7 @@ import (
 
 type AuthService struct {
 	log                  *zap.Logger
-	tokenManager         *auth.TokenManager
+	tokenManager         *auth.Manager
 	userServiceClient    *user_service.UserClient
 	accessTokenTTL       time.Duration
 	refreshTokenSaver    RefreshTokenSaver
@@ -20,7 +20,7 @@ type AuthService struct {
 
 func NewArticleService(
 	log *zap.Logger,
-	tokenManager *auth.TokenManager,
+	tokenManager *auth.Manager,
 	userServiceClient *user_service.UserClient,
 	accessTokenTTL time.Duration,
 	refreshTokenSaver RefreshTokenSaver,

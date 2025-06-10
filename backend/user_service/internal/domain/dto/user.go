@@ -3,9 +3,9 @@ package dto
 import "database/sql"
 
 type CreateUserInput struct {
-	Name     string
-	Email    string
-	Password string
+	Name         string
+	Email        string
+	PasswordHash string
 }
 
 type LoginUserOutput struct {

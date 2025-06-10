@@ -16,7 +16,7 @@ func (s *Storage) SaveUser(ctx context.Context, input dto.CreateUserInput) error
 	}
 
 	queryInsertUser := `INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3)`
-	_, err = tx.Exec(ctx, queryInsertUser, input.Name, input.Email, input.Password)
+	_, err = tx.Exec(ctx, queryInsertUser, input.Name, input.Email, input.PasswordHash)
 	if err != nil {
 		var pgErr *pgconn.PgError
 		if errors.As(err, &pgErr) && pgErr.Code == pgerrcode.UniqueViolation {
