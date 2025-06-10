@@ -10,15 +10,7 @@ import (
 )
 
 func (s *UserService) CreateUser(ctx context.Context, input dto.CreateUserInput) error {
-	// TODO: take out hashing in auth service
-	passHash, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
-	if err != nil {
-		s.log.Error("failed to hash password", zap.Error(err))
-		return err
-	}
-	input.Password = string(passHash)
-
-	err = s.userSaver.SaveUser(ctx, input)
+	err := s.userSaver.SaveUser(ctx, input)
 	if err != nil {
 		if errors.Is(err, postgres.ErrUserExists) {
 			s.log.Error("user already exists", zap.Error(err))
