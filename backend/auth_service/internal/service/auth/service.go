@@ -18,7 +18,7 @@ type AuthService struct {
 	refreshTokenDeleter  RefreshTokenDeleter
 }
 
-func NewArticleService(
+func NewAuthService(
 	log *zap.Logger,
 	tokenManager *auth.Manager,
 	userServiceClient *user_service.UserClient,
