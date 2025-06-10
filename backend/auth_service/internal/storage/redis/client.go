@@ -5,13 +5,15 @@ import (
 	"fmt"
 	"github.com/Nikita-Mihailuk/goboard/backend/auth_service/internal/config"
 	"github.com/redis/go-redis/v9"
+	"time"
 )
 
 type Storage struct {
-	db *redis.Client
+	db              *redis.Client
+	refreshTokenTTL time.Duration
 }
 
-func NewStorage(cfg *config.Config) *Storage {
+func NewStorage(cfg *config.Config, refreshTokenTTL time.Duration) *Storage {
 	client := redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%s", cfg.DB.Host, cfg.DB.Port),
 		Password: cfg.DB.Password,
@@ -24,6 +26,7 @@ func NewStorage(cfg *config.Config) *Storage {
 	}
 
 	return &Storage{
-		db: client,
+		db:              client,
+		refreshTokenTTL: refreshTokenTTL,
 	}
 }

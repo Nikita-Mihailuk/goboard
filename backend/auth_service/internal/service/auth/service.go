@@ -11,7 +11,6 @@ type AuthService struct {
 	log                  *zap.Logger
 	tokenManager         auth.TokenManager
 	accessTokenTTL       time.Duration
-	refreshTokenTTL      time.Duration
 	refreshTokenSaver    RefreshTokenSaver
 	refreshTokenProvider RefreshTokenProvider
 	refreshTokenDeleter  RefreshTokenDeleter
@@ -21,7 +20,6 @@ func NewArticleService(
 	log *zap.Logger,
 	tokenManager auth.TokenManager,
 	accessTokenTTL time.Duration,
-	refreshTokenTTL time.Duration,
 	refreshTokenSaver RefreshTokenSaver,
 	refreshTokenProvider RefreshTokenProvider,
 	refreshTokenDeleter RefreshTokenDeleter,
@@ -31,7 +29,6 @@ func NewArticleService(
 		log:                  log,
 		tokenManager:         tokenManager,
 		accessTokenTTL:       accessTokenTTL,
-		refreshTokenTTL:      refreshTokenTTL,
 		refreshTokenSaver:    refreshTokenSaver,
 		refreshTokenProvider: refreshTokenProvider,
 		refreshTokenDeleter:  refreshTokenDeleter,
@@ -39,7 +36,7 @@ func NewArticleService(
 }
 
 type RefreshTokenSaver interface {
-	SetRefreshToken(ctx context.Context, refreshToken string) error
+	SetRefreshToken(ctx context.Context, userID int64, refreshToken string) error
 }
 
 type RefreshTokenProvider interface {

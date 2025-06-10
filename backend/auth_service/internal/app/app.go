@@ -14,13 +14,13 @@ type App struct {
 }
 
 func NewApp(log *zap.Logger, cfg *config.Config) *App {
-	storage := redis.NewStorage(cfg)
+	storage := redis.NewStorage(cfg, cfg.Auth.RefreshTokenTTL)
 
 	tokenManager, err := authManager.NewManager(cfg.Auth.SecretKey)
 	if err != nil {
 		panic(err)
 	}
-	articleService := auth.NewArticleService(log, tokenManager, cfg.Auth.AccessTokenTTL, cfg.Auth.RefreshTokenTTL, storage, storage, storage)
+	articleService := auth.NewArticleService(log, tokenManager, cfg.Auth.AccessTokenTTL, storage, storage, storage)
 
 	gRPCApp := grpcApp.NewApp(log, articleService, cfg.GRPCServer.Port)
 	return &App{
