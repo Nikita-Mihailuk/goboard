@@ -9,14 +9,16 @@ import (
 )
 
 type Config struct {
-	Env        string   `yaml:"env" env:"ENV"`
-	GRPCServer GRPC     `yaml:"grpc"`
-	DB         DataBase `yaml:"db"`
-	Auth       Auth     `yaml:"auth"`
+	Env         string      `yaml:"env" env:"ENV"`
+	GRPCServer  GRPC        `yaml:"grpc"`
+	DB          DataBase    `yaml:"db"`
+	Auth        Auth        `yaml:"auth"`
+	UserService UserService `yaml:"userService"`
 }
 
 type GRPC struct {
-	Port string `yaml:"port" env:"PORT"`
+	Port    string        `yaml:"port" env:"PORT"`
+	Timeout time.Duration `yaml:"timeout" env:"GRPC_TIMEOUT"`
 }
 
 type DataBase struct {
@@ -30,6 +32,11 @@ type Auth struct {
 	AccessTokenTTL  time.Duration `yaml:"accessTokenTTL" env:"ACCESS_TOKEN_TTL"`
 	RefreshTokenTTL time.Duration `yaml:"refreshTokenTTL" env:"REFRESH_TOKEN_TTL"`
 	SecretKey       string        `yaml:"secretKey" env:"SECRET_KEY"`
+}
+
+type UserService struct {
+	Host string `yaml:"host" env:"USER_SERVICE_HOST"`
+	Port string `yaml:"port" env:"USER_SERVICE_PORT"`
 }
 
 var instance *Config

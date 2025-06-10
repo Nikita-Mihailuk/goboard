@@ -1,6 +1,7 @@
 env: local
 grpc:
-  port: 8003
+  port: 8002
+  timeout: 5s
 db:
   host: localhost
   port: 6379
@@ -10,3 +11,6 @@ auth:
   accessTokenTTL: 30m
   refreshTokenTTL: 360h # 15 days
   secretKey: "superSecretKey"
+userService:
+  host: localhost
+  port: 8000
