@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/domain/dto"
 	userServicev1 "github.com/Nikita-Mihailuk/protos_goboard/gen/go/user_service"
-	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -25,56 +24,6 @@ func NewUserClient(ctx context.Context, addr string) (*UserClient, error) {
 	}
 
 	return &UserClient{api: userServicev1.NewUserClient(cc)}, nil
-}
-
-// TODO: take out login and create user in auth service
-func (c *UserClient) CreateUser(ctx context.Context, input dto.CreateUserInput) error {
-	_, err := c.api.CreateUser(ctx, &userServicev1.CreateUserRequest{
-		Email:    input.Email,
-		Name:     input.Name,
-		Password: input.Password,
-	})
-
-	if err != nil {
-		st, ok := status.FromError(err)
-		if ok {
-			switch st.Code() {
-			case codes.AlreadyExists:
-				return ErrUserExists
-			default:
-				return ErrInternalGRPC
-			}
-		}
-		return err
-	}
-
-	return nil
-}
-
-func (c *UserClient) LoginUser(ctx context.Context, email string, password string) (int64, error) {
-	resp, err := c.api.LoginUser(ctx, &userServicev1.LoginUserRequest{
-		Email: email,
-	})
-	if err != nil {
-		st, ok := status.FromError(err)
-		if ok {
-			switch st.Code() {
-			case codes.NotFound:
-				return 0, ErrInvalidCredentials
-			default:
-				return 0, ErrInternalGRPC
-			}
-		}
-		return 0, err
-	}
-
-	// TODO: take out in auth service
-	err = bcrypt.CompareHashAndPassword([]byte(resp.GetPasswordHash()), []byte(password))
-	if err != nil {
-		return 0, ErrInvalidCredentials
-	}
-
-	return resp.GetUserId(), nil
 }
 
 func (c *UserClient) GetUserByID(ctx context.Context, id int64) (dto.GetUserByIDOutput, error) {

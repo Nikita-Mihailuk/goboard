@@ -9,7 +9,7 @@ import (
 )
 
 func (h *Handler) RegisterArticleRouts(router fiber.Router) {
-	articleGroup := router.Group("/articles")
+	articleGroup := router.Group("/articles", h.authMiddleware)
 
 	articleGroup.Post("", h.createArticle)
 	articleGroup.Get("/:id", h.getArticleByID)

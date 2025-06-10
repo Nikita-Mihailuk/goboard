@@ -12,6 +12,8 @@ type Config struct {
 	HTTPServer     HTTPServer     `yaml:"server"`
 	UserService    UserService    `yaml:"userService"`
 	ArticleService ArticleService `yaml:"articleService"`
+	AuthService    AuthService    `yaml:"authService"`
+	Auth           Auth           `yaml:"auth"`
 }
 
 type HTTPServer struct {
@@ -27,6 +29,15 @@ type UserService struct {
 type ArticleService struct {
 	Host string `yaml:"host" env:"ARTICLE_SERVICE_HOST"`
 	Port string `yaml:"port" env:"ARTICLE_SERVICE_PORT"`
+}
+
+type AuthService struct {
+	Host string `yaml:"host" env:"AUTH_SERVICE_HOST"`
+	Port string `yaml:"port" env:"AUTH_SERVICE_PORT"`
+}
+
+type Auth struct {
+	SecretKey string `yaml:"secretKey" env:"SECRET_KEY"`
 }
 
 var instance *Config

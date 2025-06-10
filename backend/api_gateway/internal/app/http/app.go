@@ -2,8 +2,10 @@ package http
 
 import (
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/article_service"
+	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/auth_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/user_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/delivery/http"
+	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/pkg/auth"
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
@@ -16,7 +18,14 @@ type App struct {
 	port   string
 }
 
-func NewApp(port string, userServiceClient *user_service.UserClient, articleServiceClient *article_service.ArticleClient) *App {
+func NewApp(
+	port string,
+	userServiceClient *user_service.UserClient,
+	articleServiceClient *article_service.ArticleClient,
+	authServiceClient *auth_service.AuthClient,
+	tokenManager *auth.Manager,
+) *App {
+
 	router := fiber.New(fiber.Config{
 		ServerHeader: "Fiber",
 		ReadTimeout:  5 * time.Second,
@@ -25,7 +34,7 @@ func NewApp(port string, userServiceClient *user_service.UserClient, articleServ
 	router.Get("/static*", static.New("./static"))
 	router.Use(logger.New(), cors.New())
 
-	handler := http.NewHandler(userServiceClient, articleServiceClient)
+	handler := http.NewHandler(userServiceClient, articleServiceClient, authServiceClient, tokenManager)
 	handler.InitRoutes(router)
 
 	return &App{
