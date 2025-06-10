@@ -1,0 +1,12 @@
+env: local
+grpc:
+  port: 8003
+db:
+  host: localhost
+  port: 6379
+  password: "00000000"
+  db: 0
+auth:
+  accessTokenTTL: 30m
+  refreshTokenTTL: 360h # 15 days
+  secretKey: "superSecretKey"
