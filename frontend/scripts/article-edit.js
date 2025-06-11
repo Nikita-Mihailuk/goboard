@@ -30,14 +30,44 @@ marked.setOptions({
     sanitize: false
 });
 
+const API_URL = 'http://localhost:8080';
+
+async function fetchWithAuth(url, options = {}) {
+    let accessToken = sessionStorage.getItem('access_token');
+    let headers = options.headers ? { ...options.headers } : {};
+    if (accessToken) {
+        headers['Authorization'] = 'Bearer ' + accessToken;
+    }
+    headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    options.headers = headers;
+    options.credentials = 'include';
+
+    let response = await fetch(url, options);
+    if (response.status === 401) {
+        // Пробуем обновить токен
+        const refreshResponse = await fetch(`${API_URL}/auth/refresh`, { method: 'POST', credentials: 'include' });
+        if (refreshResponse.ok) {
+            const refreshData = await refreshResponse.json();
+            sessionStorage.setItem('access_token', refreshData.access_token);
+            headers['Authorization'] = 'Bearer ' + refreshData.access_token;
+            response = await fetch(url, { ...options, headers });
+        }
+    }
+    return response;
+}
+
 // Загрузка информации о пользователе
 async function loadUserInfo() {
     try {
-        const response = await fetch(`http://localhost:8080/users/${userId}`);
+        const response = await fetchWithAuth(`${API_URL}/users`);
         if (!response.ok) {
             throw new Error('Ошибка при загрузке информации о пользователе');
         }
-        currentUser = await response.json();
+        const data = await response.json();
+        currentUser = data.user || data;
+        if (data.user_id) {
+            localStorage.setItem('user_id', data.user_id);
+        }
     } catch (error) {
         console.error('Error loading user info:', error);
         alert('Ошибка при загрузке информации о пользователе');
@@ -57,7 +87,7 @@ if (isNewArticle) {
 // Загрузка существующей статьи
 async function loadArticle() {
     try {
-        const response = await fetch(`http://localhost:8080/articles/${articleId}`);
+        const response = await fetchWithAuth(`${API_URL}/articles/${articleId}`);
         
         if (!response.ok) {
             throw new Error('Статья не найдена');
@@ -89,7 +119,7 @@ articleForm.addEventListener('submit', async (e) => {
     const articleData = {
         title: titleInput.value,
         content: contentInput.value,
-        author_id: parseInt(userId)
+        author_id: parseInt(localStorage.getItem('user_id'))
     };
 
     try {
@@ -105,7 +135,7 @@ articleForm.addEventListener('submit', async (e) => {
                 articleData.author_photo_url = currentUser.photo_url;
             }
             
-            response = await fetch('http://localhost:8080/articles/', {
+            response = await fetchWithAuth(`${API_URL}/articles/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -113,8 +143,7 @@ articleForm.addEventListener('submit', async (e) => {
                 body: JSON.stringify(articleData)
             });
         } else {
-
-            response = await fetch(`http://localhost:8080/articles/${articleId}`, {
+            response = await fetchWithAuth(`${API_URL}/articles/${articleId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -144,7 +173,7 @@ deleteBtn.addEventListener('click', async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost:8080/articles/${articleId}`, {
+        const response = await fetchWithAuth(`${API_URL}/articles/${articleId}`, {
             method: 'DELETE'
         });
 

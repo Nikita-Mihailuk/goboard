@@ -1,6 +1,8 @@
 package http
 
 import (
+	"time"
+
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/article_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/auth_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/user_service"
@@ -10,7 +12,6 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/static"
-	"time"
 )
 
 type App struct {
@@ -32,7 +33,12 @@ func NewApp(
 		WriteTimeout: 5 * time.Second,
 	})
 	router.Get("/static*", static.New("./static"))
-	router.Use(logger.New(), cors.New())
+	router.Use(logger.New(), cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost"},
+		AllowCredentials: true,
+		AllowHeaders:     []string{"Content-Type", "Authorization", "Cache-Control"},
+		AllowMethods:     []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
+	}))
 
 	handler := http.NewHandler(userServiceClient, articleServiceClient, authServiceClient, tokenManager)
 	handler.InitRoutes(router)

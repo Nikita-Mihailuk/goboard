@@ -33,17 +33,48 @@ let totalArticles = 0;
 let currentTab = 'main';
 let allArticles = [];
 
+const API_URL = 'http://localhost:8080';
+
+async function fetchWithAuth(url, options = {}) {
+    let accessToken = sessionStorage.getItem('access_token');
+    let headers = options.headers ? { ...options.headers } : {};
+    if (accessToken) {
+        headers['Authorization'] = 'Bearer ' + accessToken;
+    }
+    headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    options.headers = headers;
+    options.credentials = 'include';
+
+    let response = await fetch(url, options);
+    if (response.status === 401) {
+        // Пробуем обновить токен
+        const refreshResponse = await fetch(`${API_URL}/auth/refresh`, { method: 'POST', credentials: 'include' });
+        if (refreshResponse.ok) {
+            const refreshData = await refreshResponse.json();
+            sessionStorage.setItem('access_token', refreshData.access_token);
+            headers['Authorization'] = 'Bearer ' + refreshData.access_token;
+            response = await fetch(url, { ...options, headers });
+        }
+    }
+    return response;
+}
+
 // Загрузка информации о пользователе
 async function loadUserInfo() {
     try {
-        const response = await fetch(`http://localhost:8080/users/${userId}`);
+        const response = await fetchWithAuth(`${API_URL}/users`);
         if (!response.ok) {
             throw new Error('Ошибка при загрузке информации о пользователе');
         }
-        const user = await response.json();
+        const data = await response.json();
+        // Сохраняем user_id в localStorage
+        if (data.user_id) {
+            localStorage.setItem('user_id', data.user_id);
+        }
+        const user = data.user || data;
         userName.textContent = user.name;
         userEmail.textContent = user.email;
-        userPhoto.src = user.photo_url ? `http://localhost:8080/${user.photo_url}` : 'images/default-avatar.jpg';
+        userPhoto.src = user.photo_url ? `${API_URL}/${user.photo_url}` : 'images/default-avatar.jpg';
     } catch (error) {
         console.error('Error loading user info:', error);
         alert('Ошибка при загрузке информации о пользователе');
@@ -75,7 +106,7 @@ function createArticleCard(article) {
 async function loadArticles() {
     try {
         if (allArticles.length === 0) {
-            const response = await fetch('http://localhost:8080/articles');
+            const response = await fetchWithAuth(`${API_URL}/articles`);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке статей');
             }
@@ -121,7 +152,7 @@ async function loadArticles() {
 // Загрузка статей пользователя
 async function loadUserArticles() {
     try {
-        const response = await fetch(`http://localhost:8080/articles/author/${userId}`);
+        const response = await fetchWithAuth(`${API_URL}/articles/author`);
         if (!response.ok) {
             console.log(response)
             throw new Error('Ошибка при загрузке статей пользователя');
@@ -167,9 +198,13 @@ profileTab.onclick = (e) => {
     loadUserArticles();
 };
 
-logoutBtn.onclick = (e) => {
+logoutBtn.onclick = async (e) => {
     e.preventDefault();
+    try {
+        await fetchWithAuth(`${API_URL}/auth/logout`, { method: 'DELETE' });
+    } catch {}
     localStorage.removeItem('user_id');
+    sessionStorage.removeItem('access_token');
     window.location.href = 'index.html';
 };
 
@@ -213,7 +248,7 @@ editProfileForm.onsubmit = async (e) => {
     const formData = new FormData(editProfileForm);
     
     try {
-        const response = await fetch(`http://localhost:8080/users/${userId}`, {
+        const response = await fetchWithAuth(`${API_URL}/users`, {
             method: 'PATCH',
             body: formData
         });

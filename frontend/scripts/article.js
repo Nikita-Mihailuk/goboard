@@ -27,10 +27,36 @@ marked.setOptions({
     sanitize: false
 });
 
+const API_URL = 'http://localhost:8080';
+
+async function fetchWithAuth(url, options = {}) {
+    let accessToken = sessionStorage.getItem('access_token');
+    let headers = options.headers ? { ...options.headers } : {};
+    if (accessToken) {
+        headers['Authorization'] = 'Bearer ' + accessToken;
+    }
+    headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    options.headers = headers;
+    options.credentials = 'include';
+
+    let response = await fetch(url, options);
+    if (response.status === 401) {
+        // Пробуем обновить токен
+        const refreshResponse = await fetch(`${API_URL}/auth/refresh`, { method: 'POST', credentials: 'include' });
+        if (refreshResponse.ok) {
+            const refreshData = await refreshResponse.json();
+            sessionStorage.setItem('access_token', refreshData.access_token);
+            headers['Authorization'] = 'Bearer ' + refreshData.access_token;
+            response = await fetch(url, { ...options, headers });
+        }
+    }
+    return response;
+}
+
 // Загрузка статьи
 async function loadArticle() {
     try {
-        const response = await fetch(`http://localhost:8080/articles/${articleId}`);
+        const response = await fetchWithAuth(`${API_URL}/articles/${articleId}`);
         
         if (!response.ok) {
             throw new Error('Статья не найдена');
@@ -42,11 +68,11 @@ async function loadArticle() {
         articleTitle.textContent = article.title;
         articleContent.innerHTML = marked.parse(article.content);
         authorName.textContent = article.author_name;
-        authorPhoto.src = article.author_photo_url ? `http://localhost:8080/${article.author_photo_url}` : 'images/default-avatar.jpg';
+        authorPhoto.src = article.author_photo_url ? `${API_URL}/${article.author_photo_url}` : 'images/default-avatar.jpg';
         articleDate.textContent = new Date(article.created_at).toLocaleDateString();
 
         // Проверяем, является ли текущий пользователь автором статьи
-        const isAuthor = article.author_id === parseInt(userId);
+        const isAuthor = article.author_id === parseInt(localStorage.getItem('user_id'));
 
         const buttons = nav.querySelectorAll('button:not(:first-child)');
         buttons.forEach(button => button.remove());
@@ -59,7 +85,6 @@ async function loadArticle() {
             editButton.onclick = () => {
                 window.location.href = `article-edit.html?id=${articleId}`;
             };
-
 
             nav.appendChild(editButton);
         }

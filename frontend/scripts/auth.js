@@ -10,7 +10,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password }),
+            credentials: 'include'
         });
 
         if (!response.ok) {
@@ -18,7 +19,19 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         }
 
         const data = await response.json();
-        localStorage.setItem('user_id', data.user_id);
+        sessionStorage.setItem('access_token', data.access_token);
+        // Получаем user_id через защищённый эндпоинт
+        const userResp = await fetch('http://localhost:8080/users', {
+            headers: {
+                'Authorization': 'Bearer ' + data.access_token
+            },
+            credentials: 'include'
+        });
+        if (!userResp.ok) {
+            throw new Error('Ошибка при получении профиля пользователя');
+        }
+        const userData = await userResp.json();
+        localStorage.setItem('user_id', userData.user_id);
         window.location.href = 'main.html';
     } catch (error) {
         alert(error.message);

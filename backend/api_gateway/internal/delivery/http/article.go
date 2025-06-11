@@ -12,8 +12,8 @@ func (h *Handler) RegisterArticleRouts(router fiber.Router) {
 	articleGroup := router.Group("/articles", h.authMiddleware)
 
 	articleGroup.Post("", h.createArticle)
-	articleGroup.Get("/:id", h.getArticleByID)
 	articleGroup.Get("/author", h.getArticlesByAuthorID)
+	articleGroup.Get("/:id", h.getArticleByID)
 	articleGroup.Get("", h.getAllArticles)
 	articleGroup.Patch("/:id", h.updateArticle)
 	articleGroup.Delete("/:id", h.deleteArticle)
