@@ -13,7 +13,7 @@ func (h *Handler) RegisterArticleRouts(router fiber.Router) {
 
 	articleGroup.Post("", h.createArticle)
 	articleGroup.Get("/:id", h.getArticleByID)
-	articleGroup.Get("/author/:id", h.getArticlesByAuthorID)
+	articleGroup.Get("/author", h.getArticlesByAuthorID)
 	articleGroup.Get("", h.getAllArticles)
 	articleGroup.Patch("/:id", h.updateArticle)
 	articleGroup.Delete("/:id", h.deleteArticle)
@@ -53,12 +53,17 @@ func (h *Handler) getArticleByID(c fiber.Ctx) error {
 }
 
 func (h *Handler) getArticlesByAuthorID(c fiber.Ctx) error {
-	authorID, err := strconv.Atoi(c.Params("id"))
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, "invalid author id")
+	userIDstr, ok := c.Locals("userID").(string)
+	if !ok {
+		return fiber.NewError(fiber.StatusInternalServerError, "user id not found")
 	}
 
-	articles, err := h.articleServiceClient.GetArticlesByAuthorID(c.Context(), int64(authorID))
+	userID, err := strconv.ParseInt(userIDstr, 10, 64)
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, "invalid user id")
+	}
+
+	articles, err := h.articleServiceClient.GetArticlesByAuthorID(c.Context(), userID)
 
 	if err != nil {
 		if errors.Is(err, article_service.ErrInternalGRPCServer) {

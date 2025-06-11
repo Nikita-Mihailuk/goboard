@@ -11,18 +11,23 @@ import (
 func (h *Handler) RegisterUserRouts(router fiber.Router) {
 
 	userGroup := router.Group("/users", h.authMiddleware)
-	userGroup.Get("/:id", h.getUserByID)
-	userGroup.Patch("/:id", h.updateUser)
+	userGroup.Get("/", h.getUserByID)
+	userGroup.Patch("/", h.updateUser)
 
 }
 
 func (h *Handler) getUserByID(c fiber.Ctx) error {
-	userId, err := strconv.Atoi(c.Params("id"))
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, "invalid user id")
+	userIDstr, ok := c.Locals("userID").(string)
+	if !ok {
+		return fiber.NewError(fiber.StatusInternalServerError, "user id not found")
 	}
 
-	outputUser, err := h.userServiceClient.GetUserByID(c.Context(), int64(userId))
+	userID, err := strconv.ParseInt(userIDstr, 10, 64)
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, "invalid user id")
+	}
+
+	outputUser, err := h.userServiceClient.GetUserByID(c.Context(), userID)
 	if err != nil {
 		if errors.Is(err, user_service.ErrUserNotFound) {
 			return fiber.NewError(fiber.StatusNotFound, "user not found")
@@ -33,18 +38,26 @@ func (h *Handler) getUserByID(c fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, "internal error")
 	}
 
-	return c.JSON(outputUser)
+	return c.JSON(fiber.Map{
+		"user_id": userID,
+		"user":    outputUser,
+	})
 }
 
 func (h *Handler) updateUser(c fiber.Ctx) error {
-	userId, err := strconv.Atoi(c.Params("id"))
+	userIDstr, ok := c.Locals("userID").(string)
+	if !ok {
+		return fiber.NewError(fiber.StatusInternalServerError, "user id not found")
+	}
+
+	userID, err := strconv.ParseInt(userIDstr, 10, 64)
 	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, "invalid user id")
+		return fiber.NewError(fiber.StatusInternalServerError, "invalid user id")
 	}
 
 	file, _ := c.FormFile("photo")
 	inputUser := dto.UpdateUserInput{
-		ID:              int64(userId),
+		ID:              userID,
 		CurrentPassword: c.FormValue("current_password"),
 		NewPassword:     c.FormValue("new_password"),
 		Name:            c.FormValue("new_name"),
