@@ -34,3 +34,9 @@ type GetUserByIDOutput struct {
 	Name     string
 	PhotoURL sql.NullString
 }
+
+type UpdateUserMessage struct {
+	UserID       int64  `json:"user_id"`
+	UserName     string `json:"user_name"`
+	UserPhotoURL string `json:"user_photo_url"`
+}

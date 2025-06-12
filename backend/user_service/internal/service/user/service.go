@@ -3,14 +3,17 @@ package user
 import (
 	"context"
 	"github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/domain/dto"
+	"github.com/Nikita-Mihailuk/goboard/backend/user_service/internal/infrastructure/kafka"
 	"go.uber.org/zap"
 )
 
 type UserService struct {
-	log          *zap.Logger
-	userSaver    UserSaver
-	userProvider UserProvider
-	userUpdater  UserUpdater
+	log           *zap.Logger
+	userSaver     UserSaver
+	userProvider  UserProvider
+	userUpdater   UserUpdater
+	kafkaProducer *kafka.Producer
+	producerTopic string
 }
 
 func NewUserService(
@@ -18,13 +21,17 @@ func NewUserService(
 	userSaver UserSaver,
 	userProvider UserProvider,
 	userUpdater UserUpdater,
+	kafkaProducer *kafka.Producer,
+	producerTopic string,
 ) *UserService {
 
 	return &UserService{
-		log:          log,
-		userSaver:    userSaver,
-		userProvider: userProvider,
-		userUpdater:  userUpdater,
+		log:           log,
+		userSaver:     userSaver,
+		userProvider:  userProvider,
+		userUpdater:   userUpdater,
+		kafkaProducer: kafkaProducer,
+		producerTopic: producerTopic,
 	}
 }
 

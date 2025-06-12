@@ -7,3 +7,6 @@ db:
   userName: postgres
   password: "00000000"
   name: user_service_goboard
+kafka:
+  address: "localhost:9092,localhost:9093,localhost:9094"
+  producerTopic: "user-service"

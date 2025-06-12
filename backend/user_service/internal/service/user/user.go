@@ -94,6 +94,17 @@ func (s *UserService) UpdateUser(ctx context.Context, input dto.UpdateUserInput)
 		return err
 	}
 
+	err = s.kafkaProducer.Produce(dto.UpdateUserMessage{
+		UserID:       user.ID,
+		UserName:     user.Name,
+		UserPhotoURL: user.PhotoUrl.String,
+	}, s.producerTopic)
+
+	if err != nil {
+		s.log.Error("failed send message kafka", zap.Error(err))
+		return err
+	}
+
 	s.log.Info("update user", zap.Int64("id", user.ID))
 	return nil
 }
