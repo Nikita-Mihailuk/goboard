@@ -13,3 +13,9 @@ type UpdateArticleInput struct {
 	Title   string
 	Content string
 }
+
+type UpdateAuthorMessage struct {
+	UserID       int64  `json:"user_id"`
+	UserName     string `json:"user_name"`
+	UserPhotoURL string `json:"user_photo_url"`
+}

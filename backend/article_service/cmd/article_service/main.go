@@ -15,6 +15,7 @@ func main() {
 
 	application := app.NewApp(log, cfg)
 	go application.GRPCServer.MustRun()
+	go application.KafkaConsumer.Start()
 
 	// Graceful shutdown
 	stop := make(chan os.Signal, 1)
@@ -22,6 +23,6 @@ func main() {
 
 	<-stop
 
-	application.GRPCServer.Stop()
+	application.Stop()
 	log.Info("application stopped")
 }

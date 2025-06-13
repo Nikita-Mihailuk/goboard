@@ -14,6 +14,8 @@ github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250601
 github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250601120828-54f4f0de18d6/go.mod h1:ZB1s6ScKZzsypau+8PLqWAOihYG+KxOKEt2dWZgCSo0=
 github.com/Nikita-Mihailuk/protos_goboard/gen/go/user_service v0.0.0-20250530101701-1ce14a6cc9a2 h1:UgP9PMMaE7yMiePZjO4ExjPzuafoiZAcZCgFOnL/GTo=
 github.com/Nikita-Mihailuk/protos_goboard/gen/go/user_service v0.0.0-20250530101701-1ce14a6cc9a2/go.mod h1:uMD4ubvaGP+ah5Zd6RX7TRorVgHonD5+mfp1ytZ7TgU=
+github.com/confluentinc/confluent-kafka-go/v2 v2.10.1 h1:VqL+j6jm35QXfCwm4XVp38/GMjvDZBi7Hfka2sp5uU0=
+github.com/confluentinc/confluent-kafka-go/v2 v2.10.1/go.mod h1:hScqtFIGUI1wqHIgM3mjoqEou4VweGGGX7dMpcUKves=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -45,6 +47,7 @@ github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
 github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/klauspost/compress v1.16.7 h1:2mk3MPGNzKyxErAw8YaohYh69+pa4sIQSC0fPGCFR9I=
 github.com/klauspost/compress v1.16.7/go.mod h1:ntbaceVETuRiXiv4DpjP66DpAtAGkEQskQzEyD//IeE=
+github.com/klauspost/compress v1.17.9/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=

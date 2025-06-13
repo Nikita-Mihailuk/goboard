@@ -11,6 +11,7 @@ type Config struct {
 	Env        string   `yaml:"env" env:"ENV"`
 	GRPCServer GRPC     `yaml:"grpc"`
 	DB         DataBase `yaml:"db"`
+	Kafka      Kafka    `yaml:"kafka"`
 }
 
 type GRPC struct {
@@ -22,6 +23,12 @@ type DataBase struct {
 	Port     string `yaml:"port" env:"DATABASE_PORT"`
 	Username string `yaml:"userName" env:"DATABASE_USERNAME"`
 	Password string `yaml:"password" env:"DATABASE_PASSWORD"`
+}
+
+type Kafka struct {
+	Address          string `yaml:"address" env:"KAFKA_ADDRESS"`
+	UserServiceTopic string `yaml:"userServiceTopic" env:"KAFKA_USER_SERVICE_TOPIC"`
+	ConsumerGroup    string `yaml:"consumerGroup" env:"KAFKA_CONSUMER_GROUP"`
 }
 
 var instance *Config

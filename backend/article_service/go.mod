@@ -10,8 +10,9 @@ require (
 
 require (
 	github.com/Nikita-Mihailuk/protos_goboard/gen/go/article_service v0.0.0-20250601120828-54f4f0de18d6 // indirect
+	github.com/confluentinc/confluent-kafka-go/v2 v2.10.1 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
-	github.com/klauspost/compress v1.16.7 // indirect
+	github.com/klauspost/compress v1.17.9 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect

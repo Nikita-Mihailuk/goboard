@@ -106,3 +106,20 @@ func (s *Storage) DeleteArticle(ctx context.Context, id string) error {
 	}
 	return nil
 }
+
+func (s *Storage) UpdateAuthorArticle(ctx context.Context, message dto.UpdateAuthorMessage) error {
+	filter := bson.M{"author_id": message.UserID}
+	update := bson.M{
+		"$set": bson.M{
+			"author_name":      message.UserName,
+			"author_photo_url": message.UserPhotoURL,
+			"updated_at":       time.Now(),
+		},
+	}
+
+	_, err := s.collection().UpdateMany(ctx, filter, update)
+	if err != nil {
+		return err
+	}
+	return nil
+}
