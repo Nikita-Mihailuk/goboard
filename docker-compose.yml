@@ -66,6 +66,12 @@ services:
     depends_on:
       article_db:
         condition: service_healthy
+      kafka1:
+        condition: service_started # TODO: add healthcheck
+      kafka2:
+        condition: service_started # TODO: add healthcheck
+      kafka3:
+        condition: service_started # TODO: add healthcheck
     environment:
       ENV: ${ENV}
       PORT: ${ARTICLE_SERVICE_PORT}
@@ -73,6 +79,9 @@ services:
       DATABASE_PORT: ${MONGO_PORT}
       DATABASE_USERNAME: ${MONGO_USERNAME}
       DATABASE_PASSWORD: ${MONGO_PASSWORD}
+      KAFKA_ADDRESS: "kafka1:${KAFKA1_PORT},kafka2:${KAFKA2_PORT},kafka3:${KAFKA3_PORT}"
+      KAFKA_USER_SERVICE_TOPIC: ${KAFKA_PROD_TOPIC}
+      KAFKA_CONSUMER_GROUP: ${ARTICLE_SERVICE_CONSUMER_GROUP}
 
   article_db:
     container_name: article_db
