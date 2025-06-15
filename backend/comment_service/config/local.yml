@@ -1,0 +1,10 @@
+env: local
+server:
+  port: 8003
+db:
+  host: localhost
+  port: 27017
+kafka:
+  address: "localhost:9092,localhost:9093,localhost:9094"
+  userServiceTopic: "user-service"
+  consumerGroup: "comment-service"
