@@ -16,7 +16,7 @@ func main() {
 
 	application := app.NewApp(log, cfg)
 	go application.HTTPServer.MustRun()
-	//go application.KafkaConsumer.Start()
+	go application.KafkaConsumer.Start()
 
 	// Graceful shutdown
 	stop := make(chan os.Signal, 1)

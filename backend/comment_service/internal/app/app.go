@@ -26,16 +26,16 @@ func NewApp(log *zap.Logger, cfg *config.Config) *App {
 
 	httpServer := httpApp.NewApp(log, cfg.HTTPServer.Port, httpHandler)
 
-	//messageHandler := kafka.NewHandler(storage)
-	//
-	//kafkaConsumer, err := kafka.NewConsumer(messageHandler, cfg.Kafka.Address, cfg.Kafka.UserServiceTopic, cfg.Kafka.ConsumerGroup, log)
-	//if err != nil {
-	//	panic(err)
-	//}
+	messageHandler := kafka.NewHandler(storage)
+
+	kafkaConsumer, err := kafka.NewConsumer(messageHandler, cfg.Kafka.Address, cfg.Kafka.UserServiceTopic, cfg.Kafka.ConsumerGroup, log)
+	if err != nil {
+		panic(err)
+	}
 
 	return &App{
-		HTTPServer: httpServer,
-		//KafkaConsumer: kafkaConsumer,
+		HTTPServer:    httpServer,
+		KafkaConsumer: kafkaConsumer,
 	}
 }
 

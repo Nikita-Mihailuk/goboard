@@ -10,7 +10,7 @@ type CreateCommentInput struct {
 }
 
 type UpdateCommentInput struct {
-	ID      string `json:"id"`
+	ID      string `json:"id,omitempty"`
 	Content string `json:"content"`
 }
 
