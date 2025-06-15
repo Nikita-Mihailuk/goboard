@@ -13,6 +13,7 @@ type Config struct {
 	UserService    UserService    `yaml:"userService"`
 	ArticleService ArticleService `yaml:"articleService"`
 	AuthService    AuthService    `yaml:"authService"`
+	CommentService CommentService `yaml:"commentService"`
 	Auth           Auth           `yaml:"auth"`
 }
 
@@ -34,6 +35,11 @@ type ArticleService struct {
 type AuthService struct {
 	Host string `yaml:"host" env:"AUTH_SERVICE_HOST"`
 	Port string `yaml:"port" env:"AUTH_SERVICE_PORT"`
+}
+
+type CommentService struct {
+	Host string `yaml:"host" env:"COMMENT_SERVICE_HOST"`
+	Port string `yaml:"port" env:"COMMENT_SERVICE_PORT"`
 }
 
 type Auth struct {
