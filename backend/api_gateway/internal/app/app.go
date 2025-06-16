@@ -6,6 +6,7 @@ import (
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/app/http"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/article_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/auth_service"
+	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/comment_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/user_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/config"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/pkg/auth"
@@ -35,12 +36,14 @@ func NewApp(cfg *config.Config) *App {
 		panic(err)
 	}
 
+	commentServiceClient := comment_service.NewCommentClient(fmt.Sprintf("http://%s:%s", cfg.CommentService.Host, cfg.CommentService.Port))
+
 	tokenManager, err := auth.NewManager(cfg.Auth.SecretKey)
 	if err != nil {
 		panic(err)
 	}
 
-	httpApp := http.NewApp(cfg.HTTPServer.Port, userServiceClient, articleServiceClient, authServiceClient, tokenManager)
+	httpApp := http.NewApp(cfg.HTTPServer.Port, userServiceClient, articleServiceClient, authServiceClient, commentServiceClient, tokenManager)
 	return &App{
 		HTTPServer: httpApp,
 	}

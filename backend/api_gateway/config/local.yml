@@ -10,5 +10,8 @@ articleService:
 authService:
   host: localhost
   port: 8002
+commentService:
+  host: localhost
+  port: 8003
 auth:
   secretKey: "superSecretKey"

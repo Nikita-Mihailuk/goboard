@@ -1,6 +1,7 @@
 package http
 
 import (
+	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/comment_service"
 	"time"
 
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/article_service"
@@ -24,6 +25,7 @@ func NewApp(
 	userServiceClient *user_service.UserClient,
 	articleServiceClient *article_service.ArticleClient,
 	authServiceClient *auth_service.AuthClient,
+	commentServiceClient *comment_service.CommentClient,
 	tokenManager *auth.Manager,
 ) *App {
 
@@ -40,7 +42,7 @@ func NewApp(
 		AllowMethods:     []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
 	}))
 
-	handler := http.NewHandler(userServiceClient, articleServiceClient, authServiceClient, tokenManager)
+	handler := http.NewHandler(userServiceClient, articleServiceClient, authServiceClient, commentServiceClient, tokenManager)
 	handler.InitRoutes(router)
 
 	return &App{

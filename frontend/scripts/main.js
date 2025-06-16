@@ -67,10 +67,11 @@ async function loadUserInfo() {
             throw new Error('Ошибка при загрузке информации о пользователе');
         }
         const data = await response.json();
-        // Сохраняем user_id в localStorage
-        if (data.user_id) {
-            localStorage.setItem('user_id', data.user_id);
-        }
+        // Сохраняем user в localStorage
+        localStorage.setItem('user_id', data.user_id);
+        localStorage.setItem('user_name', data.user.name)
+        localStorage.setItem('user_photo_url', data.user.photo_url || ``)
+
         const user = data.user || data;
         userName.textContent = user.name;
         userEmail.textContent = user.email;
@@ -203,8 +204,8 @@ logoutBtn.onclick = async (e) => {
     try {
         await fetchWithAuth(`${API_URL}/auth/logout`, { method: 'DELETE' });
     } catch {}
-    localStorage.removeItem('user_id');
-    sessionStorage.removeItem('access_token');
+    localStorage.clear()
+    sessionStorage.clear()
     window.location.href = 'index.html';
 };
 

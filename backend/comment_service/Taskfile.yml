@@ -1,0 +1,9 @@
+version: "3"
+
+tasks:
+  run:
+    desc: "run application"
+    cmds:
+      - go run cmd/comment_service/main.go --config={{.CONFIG_PATH}}
+    vars:
+      CONFIG_PATH: "config/local.yml"

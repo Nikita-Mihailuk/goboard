@@ -6,6 +6,7 @@
     <title>GoBoard - Статья</title>
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/article.css">
+    <link rel="stylesheet" href="styles/comments.css">
     <link rel="icon" href="images/icon.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -33,8 +34,58 @@
                 Загрузка...
             </div>
         </article>
+
+        <section class="comments-section">
+            <h2>Комментарии</h2>
+            <div class="comment-form">
+                <textarea id="commentText" placeholder="Напишите ваш комментарий..."></textarea>
+                <button id="submitComment" class="btn-primary">Отправить</button>
+            </div>
+            <div id="commentsList" class="comments-list">
+                <!-- Comments will be loaded here -->
+            </div>
+        </section>
     </main>
 
+    <template id="commentTemplate">
+        <div class="comment">
+            <div class="comment-header">
+                <div class="comment-header-left">
+                    <div class="comment-author">
+                        <img class="author-photo" src="" alt="Фото автора">
+                        <span class="author-name"></span>
+                    </div>
+                </div>
+                <div class="comment-header-right">
+                    <span class="comment-date"></span>
+                    <div class="comment-menu">
+                        <button class="menu-toggle">⋮</button>
+                        <div class="menu-dropdown">
+                            <button class="edit-comment">Редактировать</button>
+                            <button class="delete-comment">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-content"></div>
+            <div class="comment-footer">
+                <button class="reply-button">Ответить</button>
+                <div class="edit-info">
+                    <span class="edited-mark"></span>
+                </div>
+            </div>
+            <div class="reply-form" style="display: none;">
+                <textarea placeholder="Написать ответ..."></textarea>
+                <div class="reply-form-actions">
+                    <button class="btn-secondary cancel-reply">Отмена</button>
+                    <button class="btn-primary submit-reply">Ответить</button>
+                </div>
+            </div>
+            <div class="replies"></div>
+        </div>
+    </template>
+
     <script src="scripts/article.js"></script>
+    <script src="scripts/comments.js"></script>
 </body>
 </html> 

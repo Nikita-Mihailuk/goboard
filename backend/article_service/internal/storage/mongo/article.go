@@ -13,7 +13,7 @@ import (
 
 const (
 	collectionName = "articles"
-	dbName         = "article_service_goboard"
+	dbName         = "goboard_db"
 )
 
 func (s *Storage) collection() *mongoDriver.Collection {

@@ -5,6 +5,7 @@ services:
     depends_on:
       - auth_service
       - article_service
+      - comment_service
     ports:
       - "8080:${HTTP_PORT}"
     volumes:
@@ -16,6 +17,8 @@ services:
       USER_SERVICE_PORT: ${USER_SERVICE_PORT}
       ARTICLE_SERVICE_HOST: ${ARTICLE_SERVICE_HOST}
       ARTICLE_SERVICE_PORT: ${ARTICLE_SERVICE_PORT}
+      COMMENT_SERVICE_HOST: ${COMMENT_SERVICE_HOST}
+      COMMENT_SERVICE_PORT: ${COMMENT_SERVICE_PORT}
       AUTH_SERVICE_HOST: ${AUTH_SERVICE_HOST}
       AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
       SECRET_KEY: ${SECRET_KEY}
@@ -82,6 +85,29 @@ services:
       KAFKA_ADDRESS: "kafka1:${KAFKA1_PORT},kafka2:${KAFKA2_PORT},kafka3:${KAFKA3_PORT}"
       KAFKA_USER_SERVICE_TOPIC: ${KAFKA_PROD_TOPIC}
       KAFKA_CONSUMER_GROUP: ${ARTICLE_SERVICE_CONSUMER_GROUP}
+
+  comment_service:
+    container_name: comment_service
+    build: backend/comment_service
+    depends_on:
+      article_db:
+        condition: service_healthy
+      kafka1:
+        condition: service_started # TODO: add healthcheck
+      kafka2:
+        condition: service_started # TODO: add healthcheck
+      kafka3:
+        condition: service_started # TODO: add healthcheck
+    environment:
+      ENV: ${ENV}
+      PORT: ${COMMENT_SERVICE_PORT}
+      DATABASE_HOST: ${MONGO_HOST}
+      DATABASE_PORT: ${MONGO_PORT}
+      DATABASE_USERNAME: ${MONGO_USERNAME}
+      DATABASE_PASSWORD: ${MONGO_PASSWORD}
+      KAFKA_ADDRESS: "kafka1:${KAFKA1_PORT},kafka2:${KAFKA2_PORT},kafka3:${KAFKA3_PORT}"
+      KAFKA_USER_SERVICE_TOPIC: ${KAFKA_PROD_TOPIC}
+      KAFKA_CONSUMER_GROUP: ${COMMENT_SERVICE_CONSUMER_GROUP}
 
   article_db:
     container_name: article_db
