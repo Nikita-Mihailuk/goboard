@@ -1,0 +1,247 @@
+.comments-section {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: var(--surface-color);
+    border-radius: 8px;
+}
+
+.comments-section h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    font-size: 1.25rem;
+}
+
+.comment-form {
+    margin-bottom: 2rem;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.75rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    resize: vertical;
+    font-family: inherit;
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+
+.comment-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.comment {
+    position: relative;
+    padding: 0.75rem 0;
+    width: 100%;
+}
+
+.comment:not(:last-child) {
+    border-bottom: 1px solid rgba(var(--secondary-color-rgb), 0.2);
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.comment-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.comment-header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.author-photo {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-name {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.comment-date {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.comment-content {
+    margin-left: 2.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.comment-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 2.5rem;
+}
+
+.comment-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.reply-button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.reply-button:hover {
+    color: var(--primary-color);
+}
+
+.replies {
+    margin-left: 2.5rem;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(var(--secondary-color-rgb), 0.2);
+}
+
+.comment-menu {
+    position: relative;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.7;
+}
+
+.menu-toggle:hover {
+    opacity: 1;
+}
+
+.menu-dropdown {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: var(--surface-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    display: none;
+    z-index: 1000;
+    min-width: 120px;
+}
+
+.menu-dropdown.active {
+    display: block;
+}
+
+.menu-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.menu-dropdown button:hover {
+    background-color: var(--primary-color);
+}
+
+.edit-info {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.edit-textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.75rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    resize: vertical;
+    font-family: inherit;
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+
+.edit-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.cancel-edit {
+    background: none;
+    border: 1px solid var(--secondary-color);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-edit:hover {
+    background-color: var(--surface-color);
+}
+
+.reply-form {
+    margin: 1rem 0 0.5rem 2.5rem;
+}
+
+.reply-form textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 0.5rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    resize: vertical;
+    font-family: inherit;
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.reply-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.reply-form-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+} 
