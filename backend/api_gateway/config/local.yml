@@ -15,3 +15,9 @@ commentService:
   port: 8003
 auth:
   secretKey: "superSecretKey"
+redis:
+  host: localhost
+  port: 6379
+  password: "00000000"
+  db: 0
+  cacheTTL: 10m

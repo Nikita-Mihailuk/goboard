@@ -13,7 +13,7 @@ func (h *Handler) RegisterArticleRouts(router fiber.Router) {
 
 	articleGroup.Post("", h.createArticle)
 	articleGroup.Get("/author", h.getArticlesByAuthorID)
-	articleGroup.Get("/:id", h.getArticleByID)
+	articleGroup.Get("/:id", h.getArticleByID, h.cacheArticleMiddleware)
 	articleGroup.Get("", h.getAllArticles)
 	articleGroup.Patch("/:id", h.updateArticle)
 	articleGroup.Delete("/:id", h.deleteArticle)
@@ -37,7 +37,8 @@ func (h *Handler) createArticle(c fiber.Ctx) error {
 }
 
 func (h *Handler) getArticleByID(c fiber.Ctx) error {
-	articleID := c.Params("id")
+	articleID := c.Locals("id").(string)
+
 	article, err := h.articleServiceClient.GetArticleByID(c.Context(), articleID)
 	if err != nil {
 		if errors.Is(err, article_service.ErrArticleNotFound) {
@@ -46,6 +47,10 @@ func (h *Handler) getArticleByID(c fiber.Ctx) error {
 		if errors.Is(err, article_service.ErrInternalGRPCServer) {
 			return fiber.NewError(fiber.StatusInternalServerError, "internal gRPC server error")
 		}
+		return fiber.NewError(fiber.StatusInternalServerError, "internal error")
+	}
+
+	if err = h.articleCache.SetArticle(c.Context(), article); err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, "internal error")
 	}
 

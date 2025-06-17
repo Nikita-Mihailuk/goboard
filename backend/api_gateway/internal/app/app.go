@@ -9,6 +9,7 @@ import (
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/comment_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/user_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/config"
+	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/infrastucture/cache"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/pkg/auth"
 )
 
@@ -43,7 +44,9 @@ func NewApp(cfg *config.Config) *App {
 		panic(err)
 	}
 
-	httpApp := http.NewApp(cfg.HTTPServer.Port, userServiceClient, articleServiceClient, authServiceClient, commentServiceClient, tokenManager)
+	cacheRedis := cache.NewCache(cfg)
+
+	httpApp := http.NewApp(cfg.HTTPServer.Port, userServiceClient, articleServiceClient, authServiceClient, commentServiceClient, tokenManager, cacheRedis)
 	return &App{
 		HTTPServer: httpApp,
 	}
