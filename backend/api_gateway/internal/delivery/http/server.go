@@ -1,10 +1,12 @@
 package http
 
 import (
+	"context"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/article_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/auth_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/comment_service"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/clients/user_service"
+	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/internal/domain/model"
 	"github.com/Nikita-Mihailuk/goboard/backend/api_gateway/pkg/auth"
 	"github.com/gofiber/fiber/v3"
 )
@@ -15,6 +17,12 @@ type Handler struct {
 	authServiceClient    *auth_service.AuthClient
 	commentServiceClient *comment_service.CommentClient
 	tokenManager         *auth.Manager
+	articleCache         ArticleCache
+}
+
+type ArticleCache interface {
+	SetArticle(ctx context.Context, article model.Article) error
+	GetArticle(ctx context.Context, id string) (model.Article, error)
 }
 
 func NewHandler(
@@ -23,6 +31,7 @@ func NewHandler(
 	authServiceClient *auth_service.AuthClient,
 	commentServiceClient *comment_service.CommentClient,
 	tokenManager *auth.Manager,
+	articleCache ArticleCache,
 ) *Handler {
 	return &Handler{
 		userServiceClient:    userServiceClient,
@@ -30,6 +39,7 @@ func NewHandler(
 		authServiceClient:    authServiceClient,
 		commentServiceClient: commentServiceClient,
 		tokenManager:         tokenManager,
+		articleCache:         articleCache,
 	}
 }
 

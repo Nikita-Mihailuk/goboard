@@ -15,6 +15,7 @@ type Config struct {
 	AuthService    AuthService    `yaml:"authService"`
 	CommentService CommentService `yaml:"commentService"`
 	Auth           Auth           `yaml:"auth"`
+	Redis          Redis          `yaml:"redis"`
 }
 
 type HTTPServer struct {
@@ -44,6 +45,14 @@ type CommentService struct {
 
 type Auth struct {
 	SecretKey string `yaml:"secretKey" env:"SECRET_KEY"`
+}
+
+type Redis struct {
+	Host     string        `yaml:"host" env:"REDIS_HOST"`
+	Port     string        `yaml:"port" env:"REDIS_PORT"`
+	Password string        `yaml:"password" env:"REDIS_PASSWORD"`
+	DbNumber int           `yaml:"db" env:"REDIS_DB_NUMBER"`
+	CacheTTL time.Duration `yaml:"cacheTTL" env:"REDIS_CACHE_TTL"`
 }
 
 var instance *Config

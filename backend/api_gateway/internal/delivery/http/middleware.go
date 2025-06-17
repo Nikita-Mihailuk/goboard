@@ -19,3 +19,15 @@ func (h *Handler) authMiddleware(c fiber.Ctx) error {
 	c.Locals("userID", claims.Subject)
 	return c.Next()
 }
+
+func (h *Handler) cacheArticleMiddleware(c fiber.Ctx) error {
+	articleID := c.Params("id")
+
+	article, err := h.articleCache.GetArticle(c.Context(), articleID)
+	if err != nil {
+		c.Locals("id", articleID)
+		return c.Next()
+	}
+
+	return c.JSON(article)
+}

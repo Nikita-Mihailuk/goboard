@@ -27,6 +27,7 @@ func NewApp(
 	authServiceClient *auth_service.AuthClient,
 	commentServiceClient *comment_service.CommentClient,
 	tokenManager *auth.Manager,
+	articleCache http.ArticleCache,
 ) *App {
 
 	router := fiber.New(fiber.Config{
@@ -42,7 +43,7 @@ func NewApp(
 		AllowMethods:     []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
 	}))
 
-	handler := http.NewHandler(userServiceClient, articleServiceClient, authServiceClient, commentServiceClient, tokenManager)
+	handler := http.NewHandler(userServiceClient, articleServiceClient, authServiceClient, commentServiceClient, tokenManager, articleCache)
 	handler.InitRoutes(router)
 
 	return &App{
