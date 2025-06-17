@@ -50,6 +50,7 @@ func (h *Handler) getArticleByID(c fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, "internal error")
 	}
 
+	article.ID = articleID
 	if err = h.articleCache.SetArticle(c.Context(), article); err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, "internal error")
 	}

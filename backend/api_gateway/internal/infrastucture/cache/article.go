@@ -14,7 +14,7 @@ var (
 )
 
 func (c *Cache) SetArticle(ctx context.Context, article model.Article) error {
-	articleMap := structToMap(article)
+	articleMap := structToMap(&article)
 
 	key := fmt.Sprintf("article:%s", article.ID)
 
