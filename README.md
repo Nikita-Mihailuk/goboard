@@ -20,6 +20,10 @@ Backend написан на языке Golang с использованием м
 - Redis
 - JWT
 - Docker
+- Docker Compose
+- Zap
+- Golang-migrate
+- Cleanenv
 - JS, HTML, CSS
 
 # Для запуска нужно
@@ -63,5 +67,3 @@ Backend написан на языке Golang с использованием м
 Главный разработчик - https://t.me/kalivanga
 
 Полная документация проекта доступна по [ссылке](https://github.com/Nikita-Mihailuk/goboard/wiki/)
-
-
